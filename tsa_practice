@@ -602,6 +602,7 @@ adf.test(YY$retfmcg)
 pp.test(YY$Healthcare)
 kpss.test(YY$retauto)
 plot(Y)
+
 ##Optimal Lag
 library(vars)
 library(mFilter)
@@ -617,6 +618,7 @@ library(forecast)
 Jotest<-ca.jo(Y,type="trace",ecdet = "trend",K=2)##Trace Stat
 Jotest
 summary(Jotest)
+# JOhansen - Do non-stationary variables share a long-run relationship?
 ##VECM
 library(urca)
 model1=VECM(Y,lag = 2, r=1,estim = 'ML')
@@ -653,7 +655,7 @@ NORM1 ##Residual are Normality Distributed
 Stability1=stability(VAR1,type = "OLS-CUSUM")
 Stability1
 plot(Stability1)
-#Granger Causality Test
+#Granger Causality Test - Does the past of X improve prediction of Y?
 Granger1=causality(VAR1,cause="retauto")
 Granger1
 Granger1=causality(VAR1,cause = "retbank")
@@ -665,7 +667,7 @@ Granger1
 Granger1=causality(VAR1, cause = "rethealthcare")
 Granger1
 causality(VAR1,cause = "retauto")$Granger
-###Impulse REsponse Function(IRF)
+###Impulse REsponse Function(IRF) - What happens after a shock to one variable?
 AUTOIRF=irf(VAR1,impulse = "retbank",response = "retauto",
             n.ahead = 10,boot = TRUE)
 plot(AUTOIRF,ylab="retauto",main="Shock From retbank")
@@ -685,7 +687,7 @@ IRF_ALL= irf(VAR1,impulse = colnames(YY),
 IRF_ALL
 plot(IRF_ALL)
 
-##Variance Decomposition
+##Variance Decomposition - Which shocks explain forecast uncertainty
 FEVDI=fevd(VAR1,n.ahead = 10)
 plot(FEVDI)
 FEVDI[["retauto"]]
@@ -697,6 +699,57 @@ FEVDI[["retfinancial"]]
 forecast=predict(VAR1,n.ahead = 10,cl=0.95)
 fanchart(forecast,names = "retauto")
 fanchart(forecast,names = "retbank")
+
+                 START
+            IMPORT DATA
+             CLEAN DATA
+          DESCRIPTIVE STATS
+           PLOT TIME SERIES - is there a trend?-- is volatility changing? -- are there unsual movements?
+         IDENTIFY TREND / PATTERN 
+Least squre trend - is there linear trend
+semi -average - has the average level changed between two periods?
+          MOVING AVERAGE-- estimates the fluctuations
+           DECOMPOSITION
+         STATIONARITY TEST
+          /              \
+     Stationary       Non-stationary
+         │                  │
+         │                  ▼
+         │             DIFFERENCE /
+         │              LOG RETURN
+         │                  │
+         └──────────┬───────┘
+                    ▼
+             TEST STATIONARITY
+                ACF / PACF -- AR components and moving average component---How is the series correlated with its past? & Which lag has a direct relationship?
+          PLOT RETURNS
+          MODEL COMPARISON
+          AIC / BIC / RMSE 
+          RESIDUAL DIAGNOSTICS
+         OUT-OF-SAMPLE TESTING / IN -SAMPLING TESTING
+              FORECASTING test period
+          CALCULATE ERRORS
+         final forecasting
+
+for multiple series:
+
+           MULTIPLE SERIES
+          CHECK STATIONARITY
+             TRANSFORM
+             TO RETURNS
+          CHECK COINTEGRATION
+                  │
+          ▼                ▼
+    Cointegrated       Not cointegrated
+        VECM              VAR
+          └───────┬────────┘
+                  ▼
+             DIAGNOSTICS
+        GRANGER CAUSALITY
+         IMPULSE RESPONSE
+        VARIANCE DECOMPOSITION
+              FORECAST
+
 
 
 
