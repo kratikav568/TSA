@@ -1,22 +1,5 @@
 ## Installing libraries 
-install.packages("readxl")
-install.packages("zoo")
-install.packages("moments")
-install.packages("FinTS")
-install.packages("tseries")
-install.packages("urca")
-install.packages("vars")
-install.packages("mFilter")
-install.packages("pdfetch")
-install.packages("quantmod")
-install.packages("dplyr")
-install.packages("tidyverse")
-install.packages("forecast")
-install.packages("stargazer")
-install.packages("ggplot2")
-install.packages("tidyr")
-install.packages("tsDyn")
-
+install.packages(c("readxl","zoo","moments","FinTS","tseries","urca","vars","mFilter","pdfetch","quantmod","dplyr","tidyverse","forecast","stargazer","ggplot2","tsDyn"))
 
 ##Importing data sets from Yahoo finance
 
