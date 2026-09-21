@@ -1,6 +1,28 @@
+## Installing libraries 
+install.packages("readxl")
+install.packages("zoo")
+install.packages("moments")
+install.packages("FinTS")
+install.packages("tseries")
+install.packages("urca")
+install.packages("vars")
+install.packages("mFilter")
+install.packages("pdfetch")
+install.packages("quantmod")
+install.packages("dplyr")
+install.packages("tidyverse")
+install.packages("forecast")
+install.packages("stargazer")
+install.packages("ggplot2")
+install.packages("tidyr")
+install.packages("tsDyn")
+
+
 ##Importing data sets from Yahoo finance
 
-library(pdfetch)# data from yahoo finance
+library(pdfetch)
+
+# data from yahoo finance
 pdfetch_YAHOO("^NSEI")#importing of data
 NIFTY_50_Data=pdfetch_YAHOO("^NSEI")#to store the value
 View(NIFTY_50_Data)
@@ -8,6 +30,7 @@ tail(NIFTY_50_Data)
 plot.ts(NIFTY_50_Data$`^NSEI.close`)
 ITC=pdfetch_YAHOO("ITC.NS")#Import the ITC share price
 View(ITC)
+par(mar = c(4, 4, 2, 1))
 plot.ts(ITC$ITC.NS.close)
 summary(ITC$ITC.NS.close)
 #Another Method to import
@@ -56,8 +79,7 @@ plot(decomp)
 library(readxl)
 
 # file path
-path <- "C:/Users/satyaban.sahoo/OneDrive - Manipal Academy of Higher Education/Documents/D Drive/Time Series Analysis/2026-27 3rd Sem MSc (BA)/Nifty 50.xlsx"
-
+path <- "C:/Users/pc/Downloads/TSA_Nifty 50.xlsx"
 # read data
 df <- read_excel(path)
 
@@ -115,7 +137,7 @@ library(readxl)
 
 ####Trend Decoposition#####
 ### 1. Read daily Nifty data
-path <- "Nifty 50.xlsx"
+path <- "C:/Users/pc/Downloads/TSA_Nifty 50.xlsx"
 
 df <- read_excel(path)
 df <- df[, 1:2]
@@ -167,11 +189,11 @@ par(mfrow = 1)
 
 ##### Stationarity test###
 library(tseries)
-adf.test(df$Price)
-pp.test(df$Price)
-kpss.test(df$Price)
+adf.test(df$Value)
+pp.test(df$Value)
+kpss.test(df$Value)
 ###Return Series
-retnifty=diff(log(df$Price))
+retnifty=diff(log(df$Value))
 plot(retnifty)
 
 ##Convert the data in to ZOO series
@@ -466,7 +488,7 @@ cat("RMSE:", rmse_20, "\n")
 
 ############################################
 library(readxl)
-WORLD_INDICES <- read_excel("~/D Drive/Time Series Analysis/World Indices.xlsx")
+WORLD_INDICES <- read_excel("C:/Users/pc/Downloads/TSA_World_Indices.xlsx")
 library(zoo)
 View(WORLD_INDICES)
 head(WORLD_INDICES)
@@ -543,7 +565,9 @@ Jotest
 summary(Jotest)
 
 library(zoo)
-Y=read.zoo(data.frame(SECTOR_WISE),FUN =as.Date,format='%d%m%Y')
+
+path <- read_excel("C:/Users/pc/Downloads/TSA_SECTOR WISE.xlsx")
+Y=read.zoo(data.frame(path),FUN =as.Date,format='%d%m%Y')
 View(Y)
 mean(Y$Healthcare)
 median(Y$Healthcare)
